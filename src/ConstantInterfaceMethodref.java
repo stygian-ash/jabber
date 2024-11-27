@@ -1,9 +1,9 @@
 import java.io.*;
 import java.util.*;
 
-public record ConstantMethodref(ConstantPoolIndex classIndex, ConstantPoolIndex nameAndTypeIndex) implements Constant {
+public record ConstantInterfaceMethodref(ConstantPoolIndex classIndex, ConstantPoolIndex nameAndTypeIndex) implements Constant {
 	public static Constant read(ClassFile classFile) throws IOException, ClassFileFormatException {
-		return new ConstantMethodref(classFile.readIndex(), classFile.readIndex());
+		return new ConstantInterfaceMethodref(classFile.readIndex(), classFile.readIndex());
 	}
 
 	public ConstantTag getTag() {

@@ -2,9 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public record ConstantClass(ConstantPoolIndex nameIndex) implements Constant {
-	public static Constant read(Constant[] constantPool, InputStream input) throws IOException, ClassFileFormatException {
-		ConstantPoolIndex nameIndex = new ConstantPoolIndex(constantPool, Binary.readU2(input));
-		return new ConstantClass(nameIndex);
+	public static Constant read(ClassFile classFile) throws IOException, ClassFileFormatException {
+		return new ConstantClass(classFile.readIndex());
 	}
 
 	public ConstantTag getTag() {

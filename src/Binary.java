@@ -21,4 +21,16 @@ public final class Binary {
 	public static int readU4(InputStream stream) throws IOException {
 		return readUnsigned(stream, 4);
 	}
+
+	public static long readU8(InputStream stream) throws IOException {
+		return (long) readU4(stream) << 32 | (long) readU4(stream);
+	}
+
+	public static float readFloat(InputStream stream) throws IOException {
+		return Float.intBitsToFloat(readU4(stream));
+	}
+
+	public static double readDouble(InputStream stream) throws IOException {
+		return Double.longBitsToDouble(readU8(stream));
+	}
 }

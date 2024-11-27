@@ -2,11 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public record ConstantDouble(double value) implements Constant {
-	public static Constant read(Constant[] constantPool, InputStream input) throws IOException, ClassFileFormatException {
-		long highBytes = Binary.readU4(input),
-			lowBytes = Binary.readU4(input);
-		double value = Double.longBitsToDouble(highBytes << 32 | lowBytes);
-		return new ConstantDouble(value);
+	public static Constant read(ClassFile classFile) throws IOException, ClassFileFormatException {
+		return new ConstantDouble(Binary.readDouble(classFile.getInput()));
 	}
 
 	public ConstantTag getTag() {

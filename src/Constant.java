@@ -7,14 +7,12 @@ public interface Constant {
 	public ConstantTag getTag();
 	public static final Constant EMPTY = ConstantEmpty.INSTANCE;
 
-	public static Constant readConstant(Constant[] constantPool, InputStream input) throws IOException, ClassFileFormatException {
-		int tagNo = Binary.readU1(input);
+	public static Constant readConstant(ClassFile classFile) throws IOException, ClassFileFormatException {
+		int tagNo = Binary.readU1(classFile.getInput());
 		var tag = ConstantTag.lookupTag(tagNo);
-		if (tag == null) {
-			Logger.error("Invalid constant tag %d", tagNo);
+		if (tag == null)
 			throw new ClassFileFormatException("Invalid constant tag %d", tagNo);
-		}
-		var constant = tag.reader.apply(constantPool, input);
+		var constant = tag.reader.apply(classFile);
 		Logger.debug("Read constant %s", constant);
 		return constant;
 	}

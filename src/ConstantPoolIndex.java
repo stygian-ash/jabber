@@ -13,12 +13,14 @@ public class ConstantPoolIndex {
 		this.index = index;
 	}
 
-	public String toString() {
-		var element = constantPool[index - 1];
-		return String.format("[%d] = %s", index, element == null ? "TBD" : element);
+	public Constant resolve() {
+		if (constantPool == null)
+			return null;
+		return constantPool[index - 1];
 	}
 
-	public static ConstantPoolIndex read(Constant[] constantPool, InputStream input) throws IOException, ClassFileFormatException {
-		return new ConstantPoolIndex(constantPool, Binary.readU2(input));
+	public String toString() {
+		var element = resolve();
+		return String.format("[%d] = %s", index, element == null ? "TBD" : element);
 	}
 }

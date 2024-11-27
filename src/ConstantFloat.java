@@ -2,9 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public record ConstantFloat(float value) implements Constant {
-	public static Constant read(Constant[] constantPool, InputStream input) throws IOException, ClassFileFormatException {
-		int bits = Binary.readU4(input);
-		float value = Float.intBitsToFloat(bits);
+	public static Constant read(ClassFile classFile) throws IOException, ClassFileFormatException {
+		float value = Binary.readFloat(classFile.getInput());
 		return new ConstantFloat(value);
 	}
 

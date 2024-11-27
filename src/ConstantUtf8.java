@@ -3,9 +3,9 @@ import java.util.*;
 
 public record ConstantUtf8(int length, String value) implements Constant {
 	@SuppressWarnings("preview")
-	public static Constant read(Constant[] constantPool, InputStream input) throws IOException, ClassFileFormatException {
-		int length = Binary.readU2(input);
-		byte[] bytes = input.readNBytes(length);
+	public static Constant read(ClassFile classFile) throws IOException, ClassFileFormatException {
+		int length = Binary.readU2(classFile.getInput());
+		byte[] bytes = classFile.getInput().readNBytes(length);
 		String value = new String(bytes, "UTF-8");
 		return new ConstantUtf8(length, value);
 	}

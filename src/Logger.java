@@ -24,11 +24,11 @@ public final class Logger {
 	}
 
 	public static void info(String format, Object... args) {
-		log("\033[1;34m INFO\033[0m", format, args);
+		log("\033[1;34mINFO \033[0m", format, args);
 	}
 
 	public static void warn(String format, Object... args) {
-		log("\033[1;33m WARN\033[0m", format, args);
+		log("\033[1;33mWARN \033[0m", format, args);
 	}
 
 	public static void error(String format, Object... args) {

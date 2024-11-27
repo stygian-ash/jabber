@@ -3,6 +3,6 @@ import java.util.*;
 import java.util.function.*;
 
 @FunctionalInterface
-public interface Reader {
-	public Constant apply(Constant[] constantPool, InputStream stream) throws IOException, ClassFileFormatException;
+public interface Reader<T> {
+	public T apply(ClassFile classFile) throws IOException, ClassFileFormatException;
 }
