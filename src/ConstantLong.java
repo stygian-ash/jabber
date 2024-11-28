@@ -7,6 +7,6 @@ public record ConstantLong(long value) implements Constant {
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_LONG;
+		return ConstantTag.LONG;
 	}
 }

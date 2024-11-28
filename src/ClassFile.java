@@ -112,7 +112,7 @@ public class ClassFile {
 		for (int i = 0; i < constantPool.length; i++) {
 			var constant = Constant.readConstant(this);
 			constantPool[i] = constant;
-			if (constant.getTag() == ConstantTag.CONSTANT_LONG || constant.getTag() == ConstantTag.CONSTANT_DOUBLE)
+			if (constant.getTag() == ConstantTag.LONG || constant.getTag() == ConstantTag.DOUBLE)
 				constantPool[++i] = Constant.EMPTY;
 		}
 		return constantPool;

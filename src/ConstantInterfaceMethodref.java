@@ -7,6 +7,6 @@ public record ConstantInterfaceMethodref(ConstantPoolIndex classIndex, ConstantP
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_METHODREF;
+		return ConstantTag.METHODREF;
 	}
 }

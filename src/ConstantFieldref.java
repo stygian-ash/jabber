@@ -7,6 +7,6 @@ public record ConstantFieldref(ConstantPoolIndex classIndex, ConstantPoolIndex n
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_FIELDREF;
+		return ConstantTag.FIELDREF;
 	}
 }

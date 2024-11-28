@@ -6,6 +6,6 @@ public record ConstantMethodType(ConstantPoolIndex descriptorIndex) implements C
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_METHODTYPE;
+		return ConstantTag.METHODTYPE;
 	}
 }

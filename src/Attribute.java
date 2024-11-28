@@ -19,7 +19,7 @@ public class Attribute {
 		int size = classFile.readU4();
 		var nameConstant = nameIndex.resolve();
 		var name = ((ConstantUtf8) nameConstant).value();
-		if (nameConstant == null || nameConstant.getTag() != ConstantTag.CONSTANT_UTF8)
+		if (nameConstant == null || nameConstant.getTag() != ConstantTag.UTF8)
 			throw new ClassFileFormatException("Invalid attribute_name_index: %s", nameConstant);
 
 		Attribute attribute;

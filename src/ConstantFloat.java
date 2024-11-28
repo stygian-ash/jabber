@@ -8,6 +8,6 @@ public record ConstantFloat(float value) implements Constant {
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_FLOAT;
+		return ConstantTag.FLOAT;
 	}
 }

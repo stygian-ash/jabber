@@ -4,7 +4,7 @@ public final class ConstantEmpty implements Constant {
 	private ConstantEmpty() {}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_EMPTY;
+		return ConstantTag.EMPTY;
 	}
 
 	public String toString() {

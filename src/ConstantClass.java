@@ -7,6 +7,6 @@ public record ConstantClass(ConstantPoolIndex nameIndex) implements Constant {
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_CLASS;
+		return ConstantTag.CLASS;
 	}
 }

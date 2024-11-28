@@ -6,6 +6,6 @@ public record ConstantInvokeDynamic(int bootstrapMethodAttrIndex, ConstantPoolIn
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_INVOKEDYNAMIC;
+		return ConstantTag.INVOKEDYNAMIC;
 	}
 }

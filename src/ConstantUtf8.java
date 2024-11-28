@@ -11,6 +11,6 @@ public record ConstantUtf8(int length, String value) implements Constant {
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_UTF8;
+		return ConstantTag.UTF8;
 	}
 }

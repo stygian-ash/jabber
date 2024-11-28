@@ -7,6 +7,6 @@ public record ConstantInteger(int value) implements Constant {
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_INTEGER;
+		return ConstantTag.INTEGER;
 	}
 }

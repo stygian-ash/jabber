@@ -7,6 +7,6 @@ public record ConstantNameAndType(ConstantPoolIndex nameIndex, ConstantPoolIndex
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_NAMEANDTYPE;
+		return ConstantTag.NAMEANDTYPE;
 	}
 }

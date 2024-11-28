@@ -6,6 +6,6 @@ public record ConstantMethodHandle(int referenceKind, ConstantPoolIndex referenc
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_METHODHANDLE;
+		return ConstantTag.METHODHANDLE;
 	}
 }

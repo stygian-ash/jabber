@@ -6,6 +6,6 @@ public record ConstantModule(ConstantPoolIndex nameIndex) implements Constant {
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_MODULE;
+		return ConstantTag.MODULE;
 	}
 }

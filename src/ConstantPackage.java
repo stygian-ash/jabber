@@ -6,6 +6,6 @@ public record ConstantPackage(ConstantPoolIndex nameIndex) implements Constant {
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_PACKAGE;
+		return ConstantTag.PACKAGE;
 	}
 }

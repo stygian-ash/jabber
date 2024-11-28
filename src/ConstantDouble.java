@@ -7,6 +7,6 @@ public record ConstantDouble(double value) implements Constant {
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_DOUBLE;
+		return ConstantTag.DOUBLE;
 	}
 }

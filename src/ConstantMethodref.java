@@ -7,6 +7,6 @@ public record ConstantMethodref(ConstantPoolIndex classIndex, ConstantPoolIndex 
 	}
 
 	public ConstantTag getTag() {
-		return ConstantTag.CONSTANT_METHODREF;
+		return ConstantTag.METHODREF;
 	}
 }
