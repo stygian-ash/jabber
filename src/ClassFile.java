@@ -57,7 +57,7 @@ public class ClassFile {
 	}
 
 	public <E> E[] readTable(E[] array, Reader<E> reader) throws IOException, ClassFileFormatException {
-		int size = Binary.readU2(input);
+		int size = readU2();
 		Logger.debug("Allocating %s table of size %d", array.getClass().getComponentType().getName(), size);
 		@SuppressWarnings("unchecked")
 		E[] table = (E[]) Array.newInstance(array.getClass().componentType(), size);
@@ -70,7 +70,7 @@ public class ClassFile {
 		readMagic();
 		version = readVersion();
 		constantPool = readConstantPool();
-		accessFlags = AccessFlag.parse(Binary.readU2(input));
+		accessFlags = AccessFlag.parse(readU2());
 		Logger.debug("Access flags: %s", accessFlags);
 		thisClass = readIndex();
 		Logger.debug("This class: %s", thisClass);
@@ -84,7 +84,7 @@ public class ClassFile {
 	}
 
 	private int readMagic() throws IOException, ClassFileFormatException {
-		int magic = Binary.readU4(input);
+		int magic = readU4();
 		Logger.debug("Read magic bytes 0x%08X", magic);
 		if (magic != MAGIC)
 			throw new ClassFileFormatException("Invalid magic bytes 0x%08X", magic);
@@ -92,8 +92,8 @@ public class ClassFile {
 	}
 
 	private ClassFileVersion readVersion() throws IOException, ClassFileFormatException {
-		int minorVersion = Binary.readU2(input),
-			majorVersion = Binary.readU2(input);
+		int minorVersion = readU2(),
+			majorVersion = readU2();
 
 		Logger.debug("Read class file version %d.%d", majorVersion, minorVersion);
 		try {
@@ -106,7 +106,7 @@ public class ClassFile {
 	}
 
 	private Constant[] readConstantPool() throws IOException, ClassFileFormatException {
-		int constantPoolCount = Binary.readU2(input);
+		int constantPoolCount = readU2();
 		Logger.debug("Allocating constant pool of size %d", constantPoolCount);
 		constantPool = new Constant[constantPoolCount - 1];
 		for (int i = 0; i < constantPool.length; i++) {
@@ -119,7 +119,39 @@ public class ClassFile {
 	}
 
 	public ConstantPoolIndex readIndex() throws IOException, ClassFileFormatException {
-		return new ConstantPoolIndex(constantPool, Binary.readU2(input));
+		return new ConstantPoolIndex(constantPool, readU2());
+	}
+
+	private long readUnsigned(int bytes) throws IOException {
+		assert 0 <= bytes && bytes <= 8;
+		long ret = 0;
+		for (int i = 0; i < bytes; i++)
+			ret = (ret << 8) | input.read();
+		return ret;
+	}
+
+	public byte readU1() throws IOException {
+		return (byte) readUnsigned(1);
+	}
+	
+	public short readU2() throws IOException {
+		return (short) readUnsigned(2);
+	}
+
+	public int readU4() throws IOException {
+		return (int) readUnsigned(4);
+	}
+
+	public long readU8() throws IOException {
+		return readUnsigned(8);
+	}
+
+	public float readFloat() throws IOException {
+		return Float.intBitsToFloat(readU4());
+	}
+
+	public double readDouble() throws IOException {
+		return Double.longBitsToDouble(readU8());
 	}
 
 	public static void main(String[] args) throws IOException, ClassFileFormatException {

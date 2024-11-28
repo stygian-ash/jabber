@@ -8,7 +8,7 @@ public interface Constant {
 	public static final Constant EMPTY = ConstantEmpty.INSTANCE;
 
 	public static Constant readConstant(ClassFile classFile) throws IOException, ClassFileFormatException {
-		int tagNo = Binary.readU1(classFile.getInput());
+		int tagNo = classFile.readU1();
 		var tag = ConstantTag.lookupTag(tagNo);
 		if (tag == null)
 			throw new ClassFileFormatException("Invalid constant tag %d", tagNo);
