@@ -16,7 +16,7 @@ public class Attribute {
 
 	public static Attribute read(ClassFile classFile) throws IOException, ClassFileFormatException {
 		var nameIndex = classFile.readIndex();
-		int size = classFile.readU4();
+		int size = classFile.getInput().readInt();
 		var nameConstant = nameIndex.resolve();
 		var name = ((ConstantUtf8) nameConstant).value();
 		if (nameConstant == null || nameConstant.getTag() != ConstantTag.UTF8)

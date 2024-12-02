@@ -3,7 +3,7 @@ import java.util.*;
 
 public record ConstantDouble(double value) implements Constant {
 	public static Constant read(ClassFile classFile) throws IOException, ClassFileFormatException {
-		return new ConstantDouble(classFile.readDouble());
+		return new ConstantDouble(classFile.getInput().readDouble());
 	}
 
 	public ConstantTag getTag() {
