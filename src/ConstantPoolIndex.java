@@ -4,6 +4,10 @@ public class ConstantPoolIndex {
 	public final Constant[] constantPool;
 	public final int index;
 
+	public ConstantPoolIndex(Constant[] constantPool, short index) throws ClassFileFormatException {
+		this(constantPool, Short.toUnsignedInt(index));
+	}
+
 	public ConstantPoolIndex(Constant[] constantPool, int index) throws ClassFileFormatException {
 		this.constantPool = constantPool;
 		if (!(0 < index && index < constantPool.length + 1)) {

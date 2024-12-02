@@ -61,7 +61,7 @@ public class ClassFile {
 	}
 
 	public <E> E[] readTable(E[] array, Reader<E> reader) throws IOException, ClassFileFormatException {
-		int size = input.readShort();
+		int size = Short.toUnsignedInt(input.readShort());
 		Logger.debug("Allocating %s table of size %d", array.getClass().getComponentType().getName(), size);
 		@SuppressWarnings("unchecked")
 		E[] table = (E[]) Array.newInstance(array.getClass().componentType(), size);
@@ -110,7 +110,7 @@ public class ClassFile {
 	}
 
 	private Constant[] readConstantPool() throws IOException, ClassFileFormatException {
-		int constantPoolCount = input.readShort();
+		int constantPoolCount = Short.toUnsignedInt(input.readShort());
 		Logger.debug("Allocating constant pool of size %d", constantPoolCount);
 		constantPool = new Constant[constantPoolCount - 1];
 		for (int i = 0; i < constantPool.length; i++) {

@@ -24,6 +24,10 @@ public enum AccessFlag {
 		this.value = value;
 	}
 
+	public static Set<AccessFlag> parse(short flags) {
+		return parse(Short.toUnsignedInt(flags));
+	}
+
 	/* TODO: check if flag is valid for clasfile/field */
 	/* TODO: check if flag is valid for Java version */
 	public static Set<AccessFlag> parse(int flags) {
