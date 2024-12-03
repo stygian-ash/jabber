@@ -1,0 +1,73 @@
+.class public super synchronized Fibonacci extends java/lang/Object
+
+.method public <init>:()V
+.maxstack 1
+.maxlocals 1
+    aload_0
+    invokespecial java/lang/Object.<init>:()V
+    return
+.endmethod
+
+.method public static fibonacci:(J)J
+.maxstack 6
+.maxlocals 2
+    lload_0
+    lconst_0
+    lcmp
+    ifgt L8
+    lconst_0
+    lreturn
+L8:
+    lload_0
+    lconst_1
+    lcmp
+    ifne L16
+    lconst_1
+    lreturn
+L16:
+    lload_0
+    lconst_1
+    lsub
+    invokestatic Fibonacci.fibonacci:(J)J
+    lload_0
+    ldc2_w 2L
+    lsub
+    invokestatic Fibonacci.fibonacci:(J)J
+    ladd
+    lreturn
+.endmethod
+
+.method public static main:([Ljava/lang/String;)V
+.maxstack 7
+.maxlocals 2
+    iconst_1
+    istore_1
+L2:
+    iload_1
+    bipush 10
+    if_icmpgt L45
+    getstatic java/lang/System.out:Ljava/io/PrintStream;
+    ldc "F_%d = %d\n"
+    iconst_2
+    anewarray java/lang/Object
+    dup
+    iconst_0
+    iload_1
+    invokestatic java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    aastore
+    dup
+    iconst_1
+    iload_1
+    i2l
+    invokestatic Fibonacci.fibonacci:(J)J
+    invokestatic java/lang/Long.valueOf:(J)Ljava/lang/Long;
+    aastore
+    invokevirtual java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+    pop
+    iinc 1 1
+    goto L2
+L45:
+    return
+.endmethod
+
+.endclass

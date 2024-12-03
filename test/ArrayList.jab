@@ -1,0 +1,1663 @@
+.class public super synchronized java/util/ArrayList extends java/util/AbstractList implements java/util/List, java/util/RandomAccess, java/lang/Cloneable, java/io/Serializable
+
+.field private static final serialVersionUID:J
+.field private static final DEFAULT_CAPACITY:I
+.field private static final EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+.field private static final DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+.field varargs elementData:[Ljava/lang/Object;
+.field private size:I
+.field private static final MAX_ARRAY_SIZE:I
+
+.method public <init>:(I)V
+.maxstack 4
+.maxlocals 2
+    aload_0
+    invokespecial java/util/AbstractList.<init>:()V
+    iload_1
+    ifle L19
+    aload_0
+    iload_1
+    anewarray java/lang/Object
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    goto L60
+L19:
+    iload_1
+    ifne L33
+    aload_0
+    getstatic java/util/ArrayList.EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    goto L60
+L33:
+    new java/lang/IllegalArgumentException
+    dup
+    new java/lang/StringBuilder
+    dup
+    invokespecial java/lang/StringBuilder.<init>:()V
+    ldc "Illegal Capacity: "
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iload_1
+    invokevirtual java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    invokevirtual java/lang/StringBuilder.toString:()Ljava/lang/String;
+    invokespecial java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
+    athrow
+L60:
+    return
+.endmethod
+
+.method public <init>:()V
+.maxstack 2
+.maxlocals 1
+    aload_0
+    invokespecial java/util/AbstractList.<init>:()V
+    aload_0
+    getstatic java/util/ArrayList.DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    return
+.endmethod
+
+.method public <init>:(Ljava/util/Collection;)V
+.maxstack 4
+.maxlocals 3
+    aload_0
+    invokespecial java/util/AbstractList.<init>:()V
+    aload_1
+    invokeinterface java/util/Collection.toArray:()[Ljava/lang/Object; 1
+    aload_0
+    aload_2
+    arraylength
+    dup_x1
+    putfield java/util/ArrayList.size:I
+    ifeq L55
+    aload_1
+    invokevirtual java/lang/Object.getClass:()Ljava/lang/Class;
+    ldc java/util/ArrayList
+    if_acmpne L38
+    aload_0
+    aload_2
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    goto L62
+L38:
+    aload_0
+    aload_2
+    aload_0
+    getfield java/util/ArrayList.size:I
+    ldc [Ljava/lang/Object;
+    invokestatic java/util/Arrays.copyOf:([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object;
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    goto L62
+L55:
+    aload_0
+    getstatic java/util/ArrayList.EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+L62:
+    return
+.endmethod
+
+.method public trimToSize:()V
+.maxstack 3
+.maxlocals 1
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    aload_0
+    getfield java/util/ArrayList.size:I
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    arraylength
+    if_icmpge L50
+    aload_0
+    aload_0
+    getfield java/util/ArrayList.size:I
+    ifne L36
+    getstatic java/util/ArrayList.EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    goto L47
+L36:
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokestatic java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+L47:
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+L50:
+    return
+.endmethod
+
+.method public ensureCapacity:(I)V
+.maxstack 2
+.maxlocals 3
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    getstatic java/util/ArrayList.DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    if_acmpeq L14
+    iconst_0
+    goto L16
+L14:
+    bipush 10
+L16:
+    istore_2
+    iload_1
+    iload_2
+    if_icmple L27
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.ensureExplicitCapacity:(I)V
+L27:
+    return
+.endmethod
+
+.method private static calculateCapacity:([Ljava/lang/Object;I)I
+.maxstack 2
+.maxlocals 2
+    aload_0
+    getstatic java/util/ArrayList.DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    if_acmpne L14
+    bipush 10
+    iload_1
+    invokestatic java/lang/Math.max:(II)I
+    ireturn
+L14:
+    iload_1
+    ireturn
+.endmethod
+
+.method private ensureCapacityInternal:(I)V
+.maxstack 3
+.maxlocals 2
+    aload_0
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    invokestatic java/util/ArrayList.calculateCapacity:([Ljava/lang/Object;I)I
+    invokespecial java/util/ArrayList.ensureExplicitCapacity:(I)V
+    return
+.endmethod
+
+.method private ensureExplicitCapacity:(I)V
+.maxstack 3
+.maxlocals 2
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    iload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    arraylength
+    isub
+    ifle L25
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.grow:(I)V
+L25:
+    return
+.endmethod
+
+.method private grow:(I)V
+.maxstack 3
+.maxlocals 4
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    arraylength
+    istore_2
+    iload_2
+    iload_2
+    iconst_1
+    ishr
+    iadd
+    istore_3
+    iload_3
+    iload_1
+    isub
+    ifge L20
+    iload_1
+    istore_3
+L20:
+    iload_3
+    ldc 2147483639
+    isub
+    ifle L32
+    iload_1
+    invokestatic java/util/ArrayList.hugeCapacity:(I)I
+    istore_3
+L32:
+    aload_0
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_3
+    invokestatic java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    return
+.endmethod
+
+.method private static hugeCapacity:(I)I
+.maxstack 2
+.maxlocals 1
+    iload_0
+    ifge L12
+    new java/lang/OutOfMemoryError
+    dup
+    invokespecial java/lang/OutOfMemoryError.<init>:()V
+    athrow
+L12:
+    iload_0
+    ldc 2147483639
+    if_icmple L23
+    ldc 2147483647
+    goto L25
+L23:
+    ldc 2147483639
+L25:
+    ireturn
+.endmethod
+
+.method public size:()I
+.maxstack 1
+.maxlocals 1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    ireturn
+.endmethod
+
+.method public isEmpty:()Z
+.maxstack 1
+.maxlocals 1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    ifne L11
+    iconst_1
+    goto L12
+L11:
+    iconst_0
+L12:
+    ireturn
+.endmethod
+
+.method public contains:(Ljava/lang/Object;)Z
+.maxstack 2
+.maxlocals 2
+    aload_0
+    aload_1
+    invokevirtual java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+    iflt L12
+    iconst_1
+    goto L13
+L12:
+    iconst_0
+L13:
+    ireturn
+.endmethod
+
+.method public indexOf:(Ljava/lang/Object;)I
+.maxstack 3
+.maxlocals 3
+    aload_1
+    ifnonnull L34
+    iconst_0
+    istore_2
+L6:
+    iload_2
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L31
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_2
+    aaload
+    ifnonnull L25
+    iload_2
+    ireturn
+L25:
+    iinc 2 1
+    goto L6
+L31:
+    goto L65
+L34:
+    iconst_0
+    istore_2
+L36:
+    iload_2
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L65
+    aload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_2
+    aaload
+    invokevirtual java/lang/Object.equals:(Ljava/lang/Object;)Z
+    ifeq L59
+    iload_2
+    ireturn
+L59:
+    iinc 2 1
+    goto L36
+L65:
+    iconst_m1
+    ireturn
+.endmethod
+
+.method public lastIndexOf:(Ljava/lang/Object;)I
+.maxstack 3
+.maxlocals 3
+    aload_1
+    ifnonnull L35
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iconst_1
+    isub
+    istore_2
+L11:
+    iload_2
+    iflt L32
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_2
+    aaload
+    ifnonnull L26
+    iload_2
+    ireturn
+L26:
+    iinc 2 255
+    goto L11
+L32:
+    goto L67
+L35:
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iconst_1
+    isub
+    istore_2
+L42:
+    iload_2
+    iflt L67
+    aload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_2
+    aaload
+    invokevirtual java/lang/Object.equals:(Ljava/lang/Object;)Z
+    ifeq L61
+    iload_2
+    ireturn
+L61:
+    iinc 2 255
+    goto L42
+L67:
+    iconst_m1
+    ireturn
+.endmethod
+
+.method public clone:()Ljava/lang/Object;
+.maxstack 3
+.maxlocals 2
+.try
+    aload_0
+    invokespecial java/lang/Object.clone:()Ljava/lang/Object;
+    checkcast java/util/ArrayList
+    astore_1
+    aload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokestatic java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_1
+    iconst_0
+    putfield java/util/ArrayList.modCount:I
+    aload_1
+.catch java/lang/CloneNotSupportedException L30
+    areturn
+L30:
+    astore_1
+    new java/lang/InternalError
+    dup
+    aload_1
+    invokespecial java/lang/InternalError.<init>:(Ljava/lang/Throwable;)V
+    athrow
+.endmethod
+
+.method public toArray:()[Ljava/lang/Object;
+.maxstack 2
+.maxlocals 1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokestatic java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+    areturn
+.endmethod
+
+.method public toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+.maxstack 5
+.maxlocals 2
+    aload_1
+    arraylength
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L28
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    getfield java/util/ArrayList.size:I
+    aload_1
+    invokevirtual java/lang/Object.getClass:()Ljava/lang/Class;
+    invokestatic java/util/Arrays.copyOf:([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object;
+    checkcast [Ljava/lang/Object;
+    areturn
+L28:
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iconst_0
+    aload_1
+    iconst_0
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+    aload_1
+    arraylength
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmple L58
+    aload_1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    aconst_null
+    aastore
+L58:
+    aload_1
+    areturn
+.endmethod
+
+.method  elementData:(I)Ljava/lang/Object;
+.maxstack 2
+.maxlocals 2
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    aaload
+    areturn
+.endmethod
+
+.method public get:(I)Ljava/lang/Object;
+.maxstack 2
+.maxlocals 2
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.rangeCheck:(I)V
+    aload_0
+    iload_1
+    invokevirtual java/util/ArrayList.elementData:(I)Ljava/lang/Object;
+    areturn
+.endmethod
+
+.method public set:(ILjava/lang/Object;)Ljava/lang/Object;
+.maxstack 3
+.maxlocals 4
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.rangeCheck:(I)V
+    aload_0
+    iload_1
+    invokevirtual java/util/ArrayList.elementData:(I)Ljava/lang/Object;
+    astore_3
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    aload_2
+    aastore
+    aload_3
+    areturn
+.endmethod
+
+.method public add:(Ljava/lang/Object;)Z
+.maxstack 5
+.maxlocals 2
+    aload_0
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iconst_1
+    iadd
+    invokespecial java/util/ArrayList.ensureCapacityInternal:(I)V
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    dup
+    getfield java/util/ArrayList.size:I
+    dup_x1
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.size:I
+    aload_1
+    aastore
+    iconst_1
+    ireturn
+.endmethod
+
+.method public add:(ILjava/lang/Object;)V
+.maxstack 6
+.maxlocals 3
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.rangeCheckForAdd:(I)V
+    aload_0
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iconst_1
+    iadd
+    invokespecial java/util/ArrayList.ensureCapacityInternal:(I)V
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    iconst_1
+    iadd
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload_1
+    isub
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    aload_2
+    aastore
+    aload_0
+    dup
+    getfield java/util/ArrayList.size:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.size:I
+    return
+.endmethod
+
+.method public remove:(I)Ljava/lang/Object;
+.maxstack 5
+.maxlocals 4
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.rangeCheck:(I)V
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    aload_0
+    iload_1
+    invokevirtual java/util/ArrayList.elementData:(I)Ljava/lang/Object;
+    astore_2
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload_1
+    isub
+    iconst_1
+    isub
+    istore_3
+    iload_3
+    ifle L50
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    iconst_1
+    iadd
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    iload_3
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+L50:
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    dup
+    getfield java/util/ArrayList.size:I
+    iconst_1
+    isub
+    dup_x1
+    putfield java/util/ArrayList.size:I
+    aconst_null
+    aastore
+    aload_2
+    areturn
+.endmethod
+
+.method public remove:(Ljava/lang/Object;)Z
+.maxstack 3
+.maxlocals 3
+    aload_1
+    ifnonnull L39
+    iconst_0
+    istore_2
+L6:
+    iload_2
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L36
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_2
+    aaload
+    ifnonnull L30
+    aload_0
+    iload_2
+    invokespecial java/util/ArrayList.fastRemove:(I)V
+    iconst_1
+    ireturn
+L30:
+    iinc 2 1
+    goto L6
+L36:
+    goto L75
+L39:
+    iconst_0
+    istore_2
+L41:
+    iload_2
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L75
+    aload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_2
+    aaload
+    invokevirtual java/lang/Object.equals:(Ljava/lang/Object;)Z
+    ifeq L69
+    aload_0
+    iload_2
+    invokespecial java/util/ArrayList.fastRemove:(I)V
+    iconst_1
+    ireturn
+L69:
+    iinc 2 1
+    goto L41
+L75:
+    iconst_0
+    ireturn
+.endmethod
+
+.method private fastRemove:(I)V
+.maxstack 5
+.maxlocals 3
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload_1
+    isub
+    iconst_1
+    isub
+    istore_2
+    iload_2
+    ifle L39
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    iconst_1
+    iadd
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    iload_2
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+L39:
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    dup
+    getfield java/util/ArrayList.size:I
+    iconst_1
+    isub
+    dup_x1
+    putfield java/util/ArrayList.size:I
+    aconst_null
+    aastore
+    return
+.endmethod
+
+.method public clear:()V
+.maxstack 3
+.maxlocals 2
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    iconst_0
+    istore_1
+L12:
+    iload_1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L33
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    aconst_null
+    aastore
+    iinc 1 1
+    goto L12
+L33:
+    aload_0
+    iconst_0
+    putfield java/util/ArrayList.size:I
+    return
+.endmethod
+
+.method public addAll:(Ljava/util/Collection;)Z
+.maxstack 5
+.maxlocals 4
+    aload_1
+    invokeinterface java/util/Collection.toArray:()[Ljava/lang/Object; 1
+    aload_2
+    arraylength
+    istore_3
+    aload_0
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload_3
+    iadd
+    invokespecial java/util/ArrayList.ensureCapacityInternal:(I)V
+    aload_2
+    iconst_0
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload_3
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+    aload_0
+    dup
+    getfield java/util/ArrayList.size:I
+    iload_3
+    iadd
+    putfield java/util/ArrayList.size:I
+    iload_3
+    ifeq L52
+    iconst_1
+    goto L53
+L52:
+    iconst_0
+L53:
+    ireturn
+.endmethod
+
+.method public addAll:(ILjava/util/Collection;)Z
+.maxstack 5
+.maxlocals 6
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.rangeCheckForAdd:(I)V
+    aload_2
+    invokeinterface java/util/Collection.toArray:()[Ljava/lang/Object; 1
+    aload_3
+    arraylength
+    istore 4
+    aload_0
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload 4
+    iadd
+    invokespecial java/util/ArrayList.ensureCapacityInternal:(I)V
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload_1
+    isub
+    istore 5
+    iload 5
+    ifle L58
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    iload 4
+    iadd
+    iload 5
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+L58:
+    aload_3
+    iconst_0
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    iload 4
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+    aload_0
+    dup
+    getfield java/util/ArrayList.size:I
+    iload 4
+    iadd
+    putfield java/util/ArrayList.size:I
+    iload 4
+    ifeq L90
+    iconst_1
+    goto L91
+L90:
+    iconst_0
+L91:
+    ireturn
+.endmethod
+
+.method protected removeRange:(II)V
+.maxstack 5
+.maxlocals 6
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload_2
+    isub
+    istore_3
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_2
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_1
+    iload_3
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload_2
+    iload_1
+    isub
+    isub
+    istore 4
+    iload 4
+    istore 5
+L45:
+    iload 5
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L68
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload 5
+    aconst_null
+    aastore
+    iinc 5 1
+    goto L45
+L68:
+    aload_0
+    iload 4
+    putfield java/util/ArrayList.size:I
+    return
+.endmethod
+
+.method private rangeCheck:(I)V
+.maxstack 4
+.maxlocals 2
+    iload_1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmplt L21
+    new java/lang/IndexOutOfBoundsException
+    dup
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.outOfBoundsMsg:(I)Ljava/lang/String;
+    invokespecial java/lang/IndexOutOfBoundsException.<init>:(Ljava/lang/String;)V
+    athrow
+L21:
+    return
+.endmethod
+
+.method private rangeCheckForAdd:(I)V
+.maxstack 4
+.maxlocals 2
+    iload_1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpgt L12
+    iload_1
+    ifge L25
+L12:
+    new java/lang/IndexOutOfBoundsException
+    dup
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList.outOfBoundsMsg:(I)Ljava/lang/String;
+    invokespecial java/lang/IndexOutOfBoundsException.<init>:(Ljava/lang/String;)V
+    athrow
+L25:
+    return
+.endmethod
+
+.method private outOfBoundsMsg:(I)Ljava/lang/String;
+.maxstack 2
+.maxlocals 2
+    new java/lang/StringBuilder
+    dup
+    invokespecial java/lang/StringBuilder.<init>:()V
+    ldc "Index: "
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iload_1
+    invokevirtual java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    ldc ", Size: "
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokevirtual java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    invokevirtual java/lang/StringBuilder.toString:()Ljava/lang/String;
+    areturn
+.endmethod
+
+.method public removeAll:(Ljava/util/Collection;)Z
+.maxstack 3
+.maxlocals 2
+    aload_1
+    invokestatic java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+    pop
+    aload_0
+    aload_1
+    iconst_0
+    invokespecial java/util/ArrayList.batchRemove:(Ljava/util/Collection;Z)Z
+    ireturn
+.endmethod
+
+.method public retainAll:(Ljava/util/Collection;)Z
+.maxstack 3
+.maxlocals 2
+    aload_1
+    invokestatic java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+    pop
+    aload_0
+    aload_1
+    iconst_1
+    invokespecial java/util/ArrayList.batchRemove:(Ljava/util/Collection;Z)Z
+    ireturn
+.endmethod
+
+.method private batchRemove:(Ljava/util/Collection;Z)Z
+.maxstack 6
+.maxlocals 10
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    astore_3
+    iconst_0
+    istore 4
+    iconst_0
+    istore 5
+    iconst_0
+    istore 6
+L14:
+.try
+    iload 4
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L54
+    aload_1
+    aload_3
+    iload 4
+    aaload
+    invokeinterface java/util/Collection.contains:(Ljava/lang/Object;)Z 2
+    if_icmpne L48
+    aload_3
+    iload 5
+    iinc 5 1
+    aload_3
+    iload 4
+    aaload
+    aastore
+L48:
+    iinc 4 1
+    goto L14
+L54:
+.finally L152
+    iload 4
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpeq L91
+    aload_3
+    iload 4
+    aload_3
+    iload 5
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload 4
+    isub
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+    iload 5
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload 4
+    isub
+    iadd
+    istore 5
+L91:
+    iload 5
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpeq L252
+    iload 5
+    istore 7
+L104:
+    iload 7
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L124
+    aload_3
+    iload 7
+    aconst_null
+    aastore
+    iinc 7 1
+    goto L104
+L124:
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload 5
+    isub
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    aload_0
+    iload 5
+    putfield java/util/ArrayList.size:I
+    iconst_1
+    istore 6
+    goto L252
+L152:
+.try
+    astore 8
+.finally L152
+    iload 4
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpeq L191
+    aload_3
+    iload 4
+    aload_3
+    iload 5
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload 4
+    isub
+    invokestatic java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+    iload 5
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload 4
+    isub
+    iadd
+    istore 5
+L191:
+    iload 5
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpeq L249
+    iload 5
+    istore 9
+L204:
+    iload 9
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L224
+    aload_3
+    iload 9
+    aconst_null
+    aastore
+    iinc 9 1
+    goto L204
+L224:
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    aload_0
+    getfield java/util/ArrayList.size:I
+    iload 5
+    isub
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    aload_0
+    iload 5
+    putfield java/util/ArrayList.size:I
+    iconst_1
+    istore 6
+L249:
+    aload 8
+    athrow
+L252:
+    iload 6
+    ireturn
+.endmethod
+
+.method private writeObject:(Ljava/io/ObjectOutputStream;)V
+.maxstack 3
+.maxlocals 4
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    istore_2
+    aload_1
+    invokevirtual java/io/ObjectOutputStream.defaultWriteObject:()V
+    aload_1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokevirtual java/io/ObjectOutputStream.writeInt:(I)V
+    iconst_0
+    istore_3
+L19:
+    iload_3
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L43
+    aload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload_3
+    aaload
+    invokevirtual java/io/ObjectOutputStream.writeObject:(Ljava/lang/Object;)V
+    iinc 3 1
+    goto L19
+L43:
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload_2
+    if_icmpeq L59
+    new java/util/ConcurrentModificationException
+    dup
+    invokespecial java/util/ConcurrentModificationException.<init>:()V
+    athrow
+L59:
+    return
+.endmethod
+
+.method private readObject:(Ljava/io/ObjectInputStream;)V
+.maxstack 4
+.maxlocals 5
+    aload_0
+    getstatic java/util/ArrayList.EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    putfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_1
+    invokevirtual java/io/ObjectInputStream.defaultReadObject:()V
+    aload_1
+    invokevirtual java/io/ObjectInputStream.readInt:()I
+    pop
+    aload_0
+    getfield java/util/ArrayList.size:I
+    ifle L86
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokestatic java/util/ArrayList.calculateCapacity:([Ljava/lang/Object;I)I
+    istore_2
+    invokestatic sun/misc/SharedSecrets.getJavaOISAccess:()Lsun/misc/JavaOISAccess;
+    aload_1
+    ldc [Ljava/lang/Object;
+    iload_2
+    invokeinterface sun/misc/JavaOISAccess.checkArray:(Ljava/io/ObjectInputStream;Ljava/lang/Class;I)V 4
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokespecial java/util/ArrayList.ensureCapacityInternal:(I)V
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    astore_3
+    iconst_0
+    istore 4
+L63:
+    iload 4
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmpge L86
+    aload_3
+    iload 4
+    aload_1
+    invokevirtual java/io/ObjectInputStream.readObject:()Ljava/lang/Object;
+    aastore
+    iinc 4 1
+    goto L63
+L86:
+    return
+.endmethod
+
+.method public listIterator:(I)Ljava/util/ListIterator;
+.maxstack 4
+.maxlocals 2
+    iload_1
+    iflt L12
+    iload_1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    if_icmple L39
+L12:
+    new java/lang/IndexOutOfBoundsException
+    dup
+    new java/lang/StringBuilder
+    dup
+    invokespecial java/lang/StringBuilder.<init>:()V
+    ldc "Index: "
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iload_1
+    invokevirtual java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    invokevirtual java/lang/StringBuilder.toString:()Ljava/lang/String;
+    invokespecial java/lang/IndexOutOfBoundsException.<init>:(Ljava/lang/String;)V
+    athrow
+L39:
+    new java/util/ArrayList$ListItr
+    dup
+    aload_0
+    iload_1
+    invokespecial java/util/ArrayList$ListItr.<init>:(Ljava/util/ArrayList;I)V
+    areturn
+.endmethod
+
+.method public listIterator:()Ljava/util/ListIterator;
+.maxstack 4
+.maxlocals 1
+    new java/util/ArrayList$ListItr
+    dup
+    aload_0
+    iconst_0
+    invokespecial java/util/ArrayList$ListItr.<init>:(Ljava/util/ArrayList;I)V
+    areturn
+.endmethod
+
+.method public iterator:()Ljava/util/Iterator;
+.maxstack 3
+.maxlocals 1
+    new java/util/ArrayList$Itr
+    dup
+    aload_0
+    invokespecial java/util/ArrayList$Itr.<init>:(Ljava/util/ArrayList;)V
+    areturn
+.endmethod
+
+.method public subList:(II)Ljava/util/List;
+.maxstack 7
+.maxlocals 3
+    iload_1
+    iload_2
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokestatic java/util/ArrayList.subListRangeCheck:(III)V
+    new java/util/ArrayList$SubList
+    dup
+    aload_0
+    aload_0
+    iconst_0
+    iload_1
+    iload_2
+    invokespecial java/util/ArrayList$SubList.<init>:(Ljava/util/ArrayList;Ljava/util/AbstractList;III)V
+    areturn
+.endmethod
+
+.method static subListRangeCheck:(III)V
+.maxstack 4
+.maxlocals 3
+    iload_0
+    ifge L31
+    new java/lang/IndexOutOfBoundsException
+    dup
+    new java/lang/StringBuilder
+    dup
+    invokespecial java/lang/StringBuilder.<init>:()V
+    ldc "fromIndex = "
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iload_0
+    invokevirtual java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    invokevirtual java/lang/StringBuilder.toString:()Ljava/lang/String;
+    invokespecial java/lang/IndexOutOfBoundsException.<init>:(Ljava/lang/String;)V
+    athrow
+L31:
+    iload_1
+    iload_2
+    if_icmple L63
+    new java/lang/IndexOutOfBoundsException
+    dup
+    new java/lang/StringBuilder
+    dup
+    invokespecial java/lang/StringBuilder.<init>:()V
+    ldc "toIndex = "
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iload_1
+    invokevirtual java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    invokevirtual java/lang/StringBuilder.toString:()Ljava/lang/String;
+    invokespecial java/lang/IndexOutOfBoundsException.<init>:(Ljava/lang/String;)V
+    athrow
+L63:
+    iload_0
+    iload_1
+    if_icmple L109
+    new java/lang/IllegalArgumentException
+    dup
+    new java/lang/StringBuilder
+    dup
+    invokespecial java/lang/StringBuilder.<init>:()V
+    ldc "fromIndex("
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iload_0
+    invokevirtual java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    ldc ") > toIndex("
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    iload_1
+    invokevirtual java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    ldc ")"
+    invokevirtual java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invokevirtual java/lang/StringBuilder.toString:()Ljava/lang/String;
+    invokespecial java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
+    athrow
+L109:
+    return
+.endmethod
+
+.method public forEach:(Ljava/util/function/Consumer;)V
+.maxstack 3
+.maxlocals 6
+    aload_1
+    invokestatic java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+    pop
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    istore_2
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    checkcast [Ljava/lang/Object;
+    astore_3
+    aload_0
+    getfield java/util/ArrayList.size:I
+    istore 4
+    iconst_0
+    istore 5
+L27:
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload_2
+    if_icmpne L58
+    iload 5
+    iload 4
+    if_icmpge L58
+    aload_1
+    aload_3
+    iload 5
+    aaload
+    invokeinterface java/util/function/Consumer.accept:(Ljava/lang/Object;)V 2
+    iconst_2
+    aconst_null
+    goto L27
+L58:
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload_2
+    if_icmpeq L74
+    new java/util/ConcurrentModificationException
+    dup
+    invokespecial java/util/ConcurrentModificationException.<init>:()V
+    athrow
+L74:
+    return
+.endmethod
+
+.method public spliterator:()Ljava/util/Spliterator;
+.maxstack 6
+.maxlocals 1
+    new java/util/ArrayList$ArrayListSpliterator
+    dup
+    aload_0
+    iconst_0
+    iconst_m1
+    iconst_0
+    invokespecial java/util/ArrayList$ArrayListSpliterator.<init>:(Ljava/util/ArrayList;III)V
+    areturn
+.endmethod
+
+.method public removeIf:(Ljava/util/function/Predicate;)Z
+.maxstack 4
+.maxlocals 10
+    aload_1
+    invokestatic java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+    pop
+    iconst_0
+    istore_2
+    new java/util/BitSet
+    dup
+    aload_0
+    getfield java/util/ArrayList.size:I
+    invokespecial java/util/BitSet.<init>:(I)V
+    astore_3
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    istore 4
+    aload_0
+    getfield java/util/ArrayList.size:I
+    istore 5
+    iconst_0
+    istore 6
+L34:
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload 4
+    if_icmpne L85
+    iload 6
+    iload 5
+    if_icmpge L85
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload 6
+    aaload
+    astore 7
+    aload_1
+    aload 7
+    invokeinterface java/util/function/Predicate.test:(Ljava/lang/Object;)Z 2
+    nop
+    fconst_1
+    aload_3
+    iload 6
+    invokevirtual java/util/BitSet.set:(I)V
+    iinc 2 1
+    iinc 6 1
+    goto L34
+L85:
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload 4
+    if_icmpeq L102
+    new java/util/ConcurrentModificationException
+    dup
+    invokespecial java/util/ConcurrentModificationException.<init>:()V
+    athrow
+L102:
+    iload_2
+    ifle L110
+    iconst_1
+    goto L111
+L110:
+    iconst_0
+L111:
+    istore 6
+    iload 6
+    ifeq L233
+    iload 5
+    iload_2
+    isub
+    istore 7
+    iconst_0
+    istore 8
+    iconst_0
+    istore 9
+L130:
+    iload 8
+    iload 5
+    if_icmpge L175
+    iload 9
+    iload 7
+    if_icmpge L175
+    aload_3
+    iload 8
+    invokevirtual java/util/BitSet.nextClearBit:(I)I
+    istore 8
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload 9
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload 8
+    aaload
+    aastore
+    iinc 8 1
+    iinc 9 1
+    goto L130
+L175:
+    iload 7
+    istore 8
+L179:
+    iload 8
+    iload 5
+    if_icmpge L200
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload 8
+    aconst_null
+    aastore
+    iinc 8 1
+    goto L179
+L200:
+    aload_0
+    iload 7
+    putfield java/util/ArrayList.size:I
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload 4
+    if_icmpeq L223
+    new java/util/ConcurrentModificationException
+    dup
+    invokespecial java/util/ConcurrentModificationException.<init>:()V
+    athrow
+L223:
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+L233:
+    iload 6
+    ireturn
+.endmethod
+
+.method public replaceAll:(Ljava/util/function/UnaryOperator;)V
+.maxstack 5
+.maxlocals 5
+    aload_1
+    invokestatic java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+    pop
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    istore_2
+    aload_0
+    getfield java/util/ArrayList.size:I
+    istore_3
+    iconst_0
+    istore 4
+L18:
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload_2
+    if_icmpne L58
+    iload 4
+    iload_3
+    if_icmpge L58
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload 4
+    aload_1
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    iload 4
+    aaload
+    invokeinterface java/util/function/UnaryOperator.apply:(Ljava/lang/Object;)Ljava/lang/Object; 2
+    iinc 4 1
+    goto L18
+L58:
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload_2
+    if_icmpeq L74
+    new java/util/ConcurrentModificationException
+    dup
+    invokespecial java/util/ConcurrentModificationException.<init>:()V
+    athrow
+L74:
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    return
+.endmethod
+
+.method public sort:(Ljava/util/Comparator;)V
+.maxstack 4
+.maxlocals 3
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    istore_2
+    aload_0
+    getfield java/util/ArrayList.elementData:[Ljava/lang/Object;
+    checkcast [Ljava/lang/Object;
+    iconst_0
+    aload_0
+    getfield java/util/ArrayList.size:I
+    aload_1
+    invokestatic java/util/Arrays.sort:([Ljava/lang/Object;IILjava/util/Comparator;)V
+    aload_0
+    getfield java/util/ArrayList.modCount:I
+    iload_2
+    if_icmpeq L37
+    new java/util/ConcurrentModificationException
+    dup
+    invokespecial java/util/ConcurrentModificationException.<init>:()V
+    athrow
+L37:
+    aload_0
+    dup
+    getfield java/util/ArrayList.modCount:I
+    iconst_1
+    iadd
+    putfield java/util/ArrayList.modCount:I
+    return
+.endmethod
+
+.method static synthetic access$000:(Ljava/util/ArrayList;)I
+.maxstack 1
+.maxlocals 1
+    aload_0
+    getfield java/util/ArrayList.size:I
+    ireturn
+.endmethod
+
+.method static <clinit>:()V
+.maxstack 1
+.maxlocals 0
+    iconst_0
+    anewarray java/lang/Object
+    putstatic java/util/ArrayList.EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    iconst_0
+    anewarray java/lang/Object
+    putstatic java/util/ArrayList.DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+    return
+.endmethod
+
+.endclass
