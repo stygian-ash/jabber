@@ -16,4 +16,6 @@ public interface Constant {
 		Logger.debug("Read constant %s", constant);
 		return constant;
 	}
+
+	public String disassemble();
 }

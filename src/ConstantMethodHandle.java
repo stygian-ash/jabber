@@ -5,6 +5,10 @@ public record ConstantMethodHandle(int referenceKind, ConstantPoolIndex referenc
 		return new ConstantMethodHandle(classFile.getInput().readByte(), classFile.readIndex());
 	}
 
+	public String disassemble() {
+		throw new UnsupportedOperationException("Method disassemble()L[java/lang/String; not implemented on class " + this.getClass());
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.METHODHANDLE;
 	}

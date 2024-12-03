@@ -6,6 +6,10 @@ public record ConstantFieldref(ConstantPoolIndex classIndex, ConstantPoolIndex n
 		return new ConstantFieldref(classFile.readIndex(), classFile.readIndex());
 	}
 
+	public String disassemble() {
+		return classIndex.resolve().disassemble() + "." + nameAndTypeIndex.resolve().disassemble();
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.FIELDREF;
 	}

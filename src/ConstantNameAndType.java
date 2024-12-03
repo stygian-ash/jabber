@@ -6,6 +6,10 @@ public record ConstantNameAndType(ConstantPoolIndex nameIndex, ConstantPoolIndex
 		return new ConstantNameAndType(classFile.readIndex(), classFile.readIndex());
 	}
 
+	public String disassemble() {
+		return nameIndex.resolve().disassemble() + ":" + descriptorIndex.resolve().disassemble();
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.NAMEANDTYPE;
 	}

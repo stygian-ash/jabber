@@ -6,6 +6,10 @@ public record ConstantInterfaceMethodref(ConstantPoolIndex classIndex, ConstantP
 		return new ConstantInterfaceMethodref(classFile.readIndex(), classFile.readIndex());
 	}
 
+	public String disassemble() {
+		return classIndex.resolve().disassemble() + "." + nameAndTypeIndex().resolve().disassemble();
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.METHODREF;
 	}

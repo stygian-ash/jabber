@@ -6,6 +6,7 @@ public final class Logger {
 	private Logger() {}
 
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	public static final String LOGLEVEL = "INFO";
 
 	public static String padRight(String string, int width, char padChar) {
 		return (padChar + "").repeat(Math.max(0, width - string.length())) + string;
@@ -20,7 +21,8 @@ public final class Logger {
 	}
 
 	public static void debug(String format, Object... args) {
-		log("\033[1;32mDEBUG\033[0m", format, args);
+		if (LOGLEVEL.equals("DEBUG"))
+			log("\033[1;32mDEBUG\033[0m", format, args);
 	}
 
 	public static void info(String format, Object... args) {

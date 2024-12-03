@@ -10,4 +10,11 @@ public record Field(Set<AccessFlag> accessFlags, ConstantPoolIndex nameIndex, Co
 		Logger.debug("Read field %s", field);
 		return field;
 	}
+
+	public String disassemble() {
+		return String.format(".field %s %s:%s",
+				AccessFlag.disassemble(accessFlags),
+				nameIndex.resolve().disassemble(),
+				descriptorIndex.resolve().disassemble());
+	}
 }

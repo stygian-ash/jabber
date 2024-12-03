@@ -10,6 +10,10 @@ public record ConstantUtf8(int length, String value) implements Constant {
 		return new ConstantUtf8(length, value);
 	}
 
+	public String disassemble() {
+		return value;
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.UTF8;
 	}

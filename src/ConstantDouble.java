@@ -6,6 +6,10 @@ public record ConstantDouble(double value) implements Constant {
 		return new ConstantDouble(classFile.getInput().readDouble());
 	}
 
+	public String disassemble() {
+		return value + "d";
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.DOUBLE;
 	}

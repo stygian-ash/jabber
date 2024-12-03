@@ -7,6 +7,10 @@ public final class ConstantEmpty implements Constant {
 		return ConstantTag.EMPTY;
 	}
 
+	public String disassemble() {
+		return "<EMPTY CONSTANT>";
+	}
+
 	public String toString() {
 		return "EMPTY";
 	}

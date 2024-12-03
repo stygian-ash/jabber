@@ -5,6 +5,10 @@ public record ConstantMethodType(ConstantPoolIndex descriptorIndex) implements C
 		return new ConstantMethodType(classFile.readIndex());
 	}
 
+	public String disassemble() {
+		return descriptorIndex.resolve().disassemble();
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.METHODTYPE;
 	}

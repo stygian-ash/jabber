@@ -6,6 +6,15 @@ public record ConstantString(ConstantPoolIndex stringIndex) implements Constant 
 		return new ConstantString(classFile.readIndex());
 	}
 
+	public static String escapeString(String string) {
+		return string
+			.replaceAll("([\\\t\n\"])", "\\\\\\1");
+	}
+
+	public String disassemble() {
+		return "\"" + escapeString(stringIndex.resolve().disassemble()) + "\"";
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.STRING;
 	}

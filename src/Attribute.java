@@ -35,6 +35,10 @@ public class Attribute {
 		return attribute;
 	}
 
+	public ConstantPoolIndex getNameIndex() {
+		return nameIndex;
+	}
+
 	public void readInfo(ClassFile classFile) throws IOException, ClassFileFormatException {
 		info = classFile.getInput().readNBytes(size);
 	}

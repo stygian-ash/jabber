@@ -6,6 +6,10 @@ public record ConstantLong(long value) implements Constant {
 		return new ConstantLong(classFile.getInput().readLong());
 	}
 
+	public String disassemble() {
+		return value + "L";
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.LONG;
 	}

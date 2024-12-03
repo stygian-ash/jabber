@@ -7,6 +7,10 @@ public record ConstantFloat(float value) implements Constant {
 		return new ConstantFloat(value);
 	}
 
+	public String disassemble() {
+		return value + "f";
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.FLOAT;
 	}

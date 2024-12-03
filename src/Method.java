@@ -12,4 +12,23 @@ public record Method(Set<AccessFlag> accessFlags, ConstantPoolIndex nameIndex, C
 		Logger.debug("Read method %s", method);
 		return method;
 	}
+
+	public Attribute getAttribute(String name) {
+		for (var attribute: attributes)
+			if (attribute.getNameIndex().resolve().disassemble().equals(name))
+				return attribute;
+		return null;
+	}
+
+	public String disassemble() {
+		var assembly = new StringBuffer();
+		assembly.append(String.format(".method %s %s:%s\n",
+					AccessFlag.disassemble(accessFlags),
+					nameIndex.resolve().disassemble(),
+					descriptorIndex.resolve().disassemble()));
+		var code = (AttributeCode) getAttribute("Code");
+		assembly.append(code.disassemble());
+		assembly.append(".endmethod\n");
+		return assembly.toString();
+	}
 }

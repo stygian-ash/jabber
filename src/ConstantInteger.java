@@ -6,6 +6,10 @@ public record ConstantInteger(int value) implements Constant {
 		return new ConstantInteger(classFile.getInput().readInt());
 	}
 
+	public String disassemble() {
+		return value + "";
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.INTEGER;
 	}

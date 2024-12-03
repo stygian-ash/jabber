@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 import java.lang.reflect.*;
 
 public class ClassFile {
@@ -126,6 +127,20 @@ public class ClassFile {
 		return new ConstantPoolIndex(constantPool, input.readShort());
 	}
 
+	public void disassemble(PrintStream stream) throws IOException {
+		stream.printf(".class %s %s extends %s",
+				AccessFlag.disassemble(accessFlags),
+				thisClass.resolve().disassemble(),
+				superClass.resolve().disassemble());
+		if (interfaces.length > 0)
+			stream.printf(" implements %s\n", String.join(", ", Stream.of(interfaces).map(i -> i.resolve().disassemble().toString()).toArray(String[]::new)));
+		stream.println();
+		Stream.of(fields).map(Field::disassemble).forEach(stream::println);
+		stream.println();
+		Stream.of(methods).map(Method::disassemble).forEach(stream::println);
+		stream.println(".endclass");
+	}
+
 	public static void main(String[] args) throws IOException, ClassFileFormatException {
 		if (args.length < 1) {
 			Logger.error("No class file provided!");
@@ -135,5 +150,6 @@ public class ClassFile {
 		Logger.info("Using file %s", testFile);
 		var stream = new FileInputStream(new File(testFile));
 		var classFile = new ClassFile(stream);
+		classFile.disassemble(System.out);
 	}
 }

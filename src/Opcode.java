@@ -174,7 +174,7 @@ public enum Opcode {
 	LLOAD_3("lload_3", 0x21),
 	LMUL("lmul", 0x69),
 	LNEG("lneg", 0x75),
-	LOOKUPSWITCH("lookupswitch", 0xab, Operand.PAD_ALIGN_4, Operand.WIDE_BRANCH_OFFSET, Operand.WIDE_BRANCH_OFFSET, Operand.LOOKUPSWITCH_PAIRS),
+	LOOKUPSWITCH("lookupswitch", 0xab, Operand.PAD_ALIGN_4, Operand.WIDE_BRANCH_OFFSET, Operand.INT_IMMEDIATE, Operand.LOOKUPSWITCH_PAIRS),
 	LOR("lor", 0x81),
 	LREM("lrem", 0x71),
 	LRETURN("lreturn", 0xad),
@@ -204,7 +204,7 @@ public enum Opcode {
 	SASTORE("sastore", 0x56),
 	SIPUSH("sipush", 0x11, Operand.SHORT_IMMEDIATE),
 	SWAP("swap", 0x5f),
-	TABLESWITCH("tableswitch", 0xaa, Operand.PAD_ALIGN_4, Operand.WIDE_BRANCH_OFFSET, Operand.WIDE_BRANCH_OFFSET, Operand.WIDE_BRANCH_OFFSET, Operand.TABLESWITCH_OFFSETS),
+	TABLESWITCH("tableswitch", 0xaa, Operand.PAD_ALIGN_4, Operand.WIDE_BRANCH_OFFSET, Operand.INT_IMMEDIATE, Operand.INT_IMMEDIATE, Operand.TABLESWITCH_OFFSETS),
 	WIDE("wide", 0xc4, Operand.INSTRUCTION);
 
 	public final String mnemonic;

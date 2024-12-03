@@ -5,6 +5,10 @@ public record ConstantInvokeDynamic(int bootstrapMethodAttrIndex, ConstantPoolIn
 		return new ConstantInvokeDynamic(classFile.getInput().readShort(), classFile.readIndex());
 	}
 
+	public String disassemble() {
+		throw new UnsupportedOperationException("Method disassemble()L[java/lang/String; not implemented on class " + this.getClass());
+	}
+
 	public ConstantTag getTag() {
 		return ConstantTag.INVOKEDYNAMIC;
 	}
