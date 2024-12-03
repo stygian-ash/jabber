@@ -22,6 +22,9 @@ public class Attribute {
 		Attribute attribute = switch (name) {
 			case "ConstantValue" -> new AttributeConstantValue(nameIndex, size);
 			case "Code" -> new AttributeCode(nameIndex, size);
+			case "NestHost" -> new AttributeNestHost(nameIndex, size);
+			case "NestMembers", "PermittedSubclasses" -> new AttributeClassList(nameIndex, size);
+			case "BootstrapMethods" -> new AttributeBootstrapMethods(nameIndex, size);
 			default -> {
 				Logger.warn("Unknown attribute type %s", name);
 				yield new Attribute(nameIndex, size);
