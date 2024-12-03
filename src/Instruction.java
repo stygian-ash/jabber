@@ -29,7 +29,7 @@ public record Instruction(long offset, Opcode opcode, Object[] operands, List<Lo
 				case WIDE_VARIABLE:
 				case COUNT:
 				case INT_IMMEDIATE:
-					assembly.append(" " + getLabel((int) operands[i]));
+					assembly.append(" " + (int) operands[i]);
 					break;
 				case CONSTANT_INDEX:
 				case WIDE_CONSTANT_INDEX:
