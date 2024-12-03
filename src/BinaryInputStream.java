@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 
 /* Adapted from https://stackoverflow.com/a/240431 */
 public class BinaryInputStream extends FilterInputStream {
@@ -80,5 +81,13 @@ public class BinaryInputStream extends FilterInputStream {
 
 	public double readDouble() throws IOException {
 		return Double.longBitsToDouble(readLong());
+	}
+
+	public byte[] align(int boundary) throws IOException {
+		var padding = new byte[boundary];
+		int index = 0;
+		while (position % boundary != 0)
+			padding[index++] = readByte();
+		return Arrays.copyOf(padding, index);
 	}
 }

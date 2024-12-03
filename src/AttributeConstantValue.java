@@ -2,19 +2,18 @@ import java.io.*;
 import java.util.*;
 
 public class AttributeConstantValue extends Attribute {
-	private ConstantPoolIndex value;
+	private ConstantPoolIndex valueIndex;
 
-	public AttributeConstantValue(ConstantPoolIndex nameIndex, ConstantPoolIndex value) {
-		super(nameIndex);
-		this.value = value;
+	public AttributeConstantValue(ConstantPoolIndex nameIndex, int size) {
+		super(nameIndex, size);
 	}
 
-	public static AttributeConstantValue read(ConstantPoolIndex nameIndex, ClassFile classFile) throws IOException, ClassFileFormatException {
-		return new AttributeConstantValue(nameIndex, classFile.readIndex());
+	public void readInfo(ClassFile classFile) throws IOException, ClassFileFormatException {
+		valueIndex = classFile.readIndex();
 	}
 
 	@Override
 	public String infoString() {
-		return String.format("value=%s", value);
+		return String.format("valueIndex=%s", valueIndex);
 	}
 }
