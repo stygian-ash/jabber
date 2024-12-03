@@ -7,7 +7,7 @@ public record ConstantMethodref(ConstantPoolIndex classIndex, ConstantPoolIndex 
 	}
 
 	public String disassemble() {
-		return classIndex.resolve().disassemble() + "." + classIndex.resolve().disassemble();
+		return classIndex.resolve().disassemble() + "." + nameAndTypeIndex.resolve().disassemble();
 	}
 
 	public ConstantTag getTag() {
