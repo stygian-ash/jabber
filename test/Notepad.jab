@@ -1,0 +1,967 @@
+.class public super synchronized Notepad extends javax/swing/JPanel
+.field protected static properties:Ljava/util/Properties;
+.field private static resources:Ljava/util/ResourceBundle;
+.field private static final EXIT_AFTER_PAINT:Ljava/lang/String;
+.field private static exitAfterFirstPaint:Z
+.field private static final MENUBAR_KEYS:[Ljava/lang/String;
+.field private static final TOOLBAR_KEYS:[Ljava/lang/String;
+.field private static final FILE_KEYS:[Ljava/lang/String;
+.field private static final EDIT_KEYS:[Ljava/lang/String;
+.field private static final DEBUG_KEYS:[Ljava/lang/String;
+.field private editor:Ljavax/swing/text/JTextComponent;
+.field private commands:Ljava/util/Map;
+.field private toolbar:Ljavax/swing/JToolBar;
+.field private status:Ljavax/swing/JComponent;
+.field private elementTreeFrame:Ljavax/swing/JFrame;
+.field protected elementTreePanel:LElementTreePanel;
+.field protected undoHandler:Ljavax/swing/event/UndoableEditListener;
+.field protected undo:Ljavax/swing/undo/UndoManager;
+.field public static final imageSuffix:Ljava/lang/String;
+.field public static final labelSuffix:Ljava/lang/String;
+.field public static final actionSuffix:Ljava/lang/String;
+.field public static final tipSuffix:Ljava/lang/String;
+.field public static final openAction:Ljava/lang/String;
+.field public static final newAction:Ljava/lang/String;
+.field public static final saveAction:Ljava/lang/String;
+.field public static final exitAction:Ljava/lang/String;
+.field public static final showElementTreeAction:Ljava/lang/String;
+.field private undoAction:LNotepad$UndoAction;
+.field private redoAction:LNotepad$RedoAction;
+.field private defaultActions:[Ljavax/swing/Action;
+
+.method public paintChildren:(Ljava/awt/Graphics;)V
+.maxstack 2
+.maxlocals 2
+    aload_0
+    aload_1
+    invokespecial javax/swing/JPanel.paintChildren:(Ljava/awt/Graphics;)V
+    getstatic Notepad.exitAfterFirstPaint:Z
+    ifeq L15
+    iconst_0
+    invokestatic java/lang/System.exit:(I)V
+L15:
+    return
+.endmethod
+
+.method  <init>:()V
+.maxstack 7
+.maxlocals 6
+    aload_0
+    iconst_1
+    invokespecial javax/swing/JPanel.<init>:(Z)V
+    aload_0
+    new Notepad$UndoHandler
+    dup
+    aload_0
+    invokespecial Notepad$UndoHandler.<init>:(LNotepad;)V
+    putfield Notepad.undoHandler:Ljavax/swing/event/UndoableEditListener;
+    aload_0
+    new javax/swing/undo/UndoManager
+    dup
+    invokespecial javax/swing/undo/UndoManager.<init>:()V
+    putfield Notepad.undo:Ljavax/swing/undo/UndoManager;
+    aload_0
+    new Notepad$UndoAction
+    dup
+    aload_0
+    invokespecial Notepad$UndoAction.<init>:(LNotepad;)V
+    putfield Notepad.undoAction:LNotepad$UndoAction;
+    aload_0
+    new Notepad$RedoAction
+    dup
+    aload_0
+    invokespecial Notepad$RedoAction.<init>:(LNotepad;)V
+    putfield Notepad.redoAction:LNotepad$RedoAction;
+    aload_0
+    bipush 7
+    anewarray javax/swing/Action
+    dup
+    iconst_0
+    new Notepad$NewAction
+    dup
+    aload_0
+    invokespecial Notepad$NewAction.<init>:(LNotepad;)V
+    aastore
+    dup
+    iconst_1
+    new Notepad$OpenAction
+    dup
+    aload_0
+    invokespecial Notepad$OpenAction.<init>:(LNotepad;)V
+    aastore
+    dup
+    iconst_2
+    new Notepad$SaveAction
+    dup
+    aload_0
+    invokespecial Notepad$SaveAction.<init>:(LNotepad;)V
+    aastore
+    dup
+    iconst_3
+    new Notepad$ExitAction
+    dup
+    aload_0
+    invokespecial Notepad$ExitAction.<init>:(LNotepad;)V
+    aastore
+    dup
+    iconst_4
+    new Notepad$ShowElementTreeAction
+    dup
+    aload_0
+    invokespecial Notepad$ShowElementTreeAction.<init>:(LNotepad;)V
+    aastore
+    dup
+    iconst_5
+    aload_0
+    getfield Notepad.undoAction:LNotepad$UndoAction;
+    aastore
+    dup
+    bipush 6
+    aload_0
+    getfield Notepad.redoAction:LNotepad$RedoAction;
+    aastore
+    putfield Notepad.defaultActions:[Ljavax/swing/Action;
+.try
+    invokestatic javax/swing/UIManager.getInstalledLookAndFeels:()[Ljavax/swing/UIManager$LookAndFeelInfo;
+    astore_1
+    aload_1
+    arraylength
+    istore_2
+    iconst_0
+    istore_3
+L140:
+    iload_3
+    iload_2
+    if_icmpge L180
+    aload_1
+    iload_3
+    aaload
+    astore 4
+    ldc "Nimbus"
+    aload 4
+    invokevirtual javax/swing/UIManager$LookAndFeelInfo.getName:()Ljava/lang/String;
+    invokevirtual java/lang/String.equals:(Ljava/lang/Object;)Z
+    ifeq L174
+    aload 4
+    invokevirtual javax/swing/UIManager$LookAndFeelInfo.getClassName:()Ljava/lang/String;
+    invokestatic javax/swing/UIManager.setLookAndFeel:(Ljava/lang/String;)V
+    goto L180
+L174:
+    iinc 3 1
+    goto L140
+L180:
+.catch java/lang/Exception L183
+    goto L184
+L183:
+    astore_1
+L184:
+    aload_0
+    invokestatic javax/swing/BorderFactory.createEtchedBorder:()Ljavax/swing/border/Border;
+    invokevirtual Notepad.setBorder:(Ljavax/swing/border/Border;)V
+    aload_0
+    new java/awt/BorderLayout
+    dup
+    invokespecial java/awt/BorderLayout.<init>:()V
+    invokevirtual Notepad.setLayout:(Ljava/awt/LayoutManager;)V
+    aload_0
+    aload_0
+    invokevirtual Notepad.createEditor:()Ljavax/swing/text/JTextComponent;
+    putfield Notepad.editor:Ljavax/swing/text/JTextComponent;
+    aload_0
+    getfield Notepad.editor:Ljavax/swing/text/JTextComponent;
+    invokevirtual javax/swing/text/JTextComponent.getDocument:()Ljavax/swing/text/Document;
+    aload_0
+    getfield Notepad.undoHandler:Ljavax/swing/event/UndoableEditListener;
+    invokeinterface javax/swing/text/Document.addUndoableEditListener:(Ljavax/swing/event/UndoableEditListener;)V 2
+    new java/util/HashMap
+    dup
+    invokespecial java/util/HashMap.<init>:()V
+    putfield Notepad.commands:Ljava/util/Map;
+    aload_0
+    invokevirtual Notepad.getActions:()[Ljavax/swing/Action;
+    astore_1
+    aload_1
+    astore_2
+    aload_2
+    arraylength
+    istore_3
+    iconst_0
+    istore 4
+L250:
+    iload 4
+    iload_3
+    if_icmpge L289
+    aload_2
+    iload 4
+    aaload
+    astore 5
+    aload_0
+    getfield Notepad.commands:Ljava/util/Map;
+    aload 5
+    ldc "Name"
+    invokeinterface javax/swing/Action.getValue:(Ljava/lang/String;)Ljava/lang/Object; 2
+    iconst_2
+    invokeinterface java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; 3
+    iinc 4 1
+    goto L250
+L289:
+    new javax/swing/JScrollPane
+    dup
+    invokespecial javax/swing/JScrollPane.<init>:()V
+    astore_2
+    aload_2
+    invokevirtual javax/swing/JScrollPane.getViewport:()Ljavax/swing/JViewport;
+    astore_3
+    aload_3
+    aload_0
+    getfield Notepad.editor:Ljavax/swing/text/JTextComponent;
+    invokevirtual javax/swing/JViewport.add:(Ljava/awt/Component;)Ljava/awt/Component;
+    pop
+    aload_0
+    ldc "ViewportBackingStore"
+    invokevirtual Notepad.getProperty:(Ljava/lang/String;)Ljava/lang/String;
+    astore 4
+    aload 4
+    ifnull L348
+    aload 4
+    invokestatic java/lang/Boolean.valueOf:(Ljava/lang/String;)Ljava/lang/Boolean;
+    astore 5
+    aload_3
+    aload 5
+    invokevirtual java/lang/Boolean.booleanValue:()Z
+    ifeq L344
+    iconst_2
+    goto L345
+L344:
+    iconst_1
+L345:
+    invokevirtual javax/swing/JViewport.setScrollMode:(I)V
+L348:
+    new javax/swing/JPanel
+    dup
+    invokespecial javax/swing/JPanel.<init>:()V
+    astore 5
+    aload 5
+    new java/awt/BorderLayout
+    dup
+    invokespecial java/awt/BorderLayout.<init>:()V
+    invokevirtual javax/swing/JPanel.setLayout:(Ljava/awt/LayoutManager;)V
+    aload 5
+    ldc "North"
+    aload_0
+    invokevirtual Notepad.createToolbar:()Ljava/awt/Component;
+    invokevirtual javax/swing/JPanel.add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+    pop
+    aload 5
+    ldc "Center"
+    aload_2
+    invokevirtual javax/swing/JPanel.add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+    pop
+    aload_0
+    ldc "Center"
+    aload 5
+    invokevirtual Notepad.add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+    pop
+    aload_0
+    ldc "South"
+    aload_0
+    invokevirtual Notepad.createStatusbar:()Ljava/awt/Component;
+    invokevirtual Notepad.add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+    pop
+    return
+.endmethod
+
+.method public static main:([Ljava/lang/String;)V
+.maxstack 2
+.maxlocals 1
+    aload_0
+    arraylength
+    ifle L20
+    aload_0
+    iconst_0
+    aaload
+    ldc "-exit"
+    invokevirtual java/lang/String.equals:(Ljava/lang/Object;)Z
+    ifeq L20
+    iconst_1
+    putstatic Notepad.exitAfterFirstPaint:Z
+L20:
+    new Notepad$1
+    dup
+    invokespecial Notepad$1.<init>:()V
+    invokestatic javax/swing/SwingUtilities.invokeAndWait:(Ljava/lang/Runnable;)V
+    return
+.endmethod
+
+.method public getActions:()[Ljavax/swing/Action;
+.maxstack 2
+.maxlocals 1
+    aload_0
+    getfield Notepad.editor:Ljavax/swing/text/JTextComponent;
+    invokevirtual javax/swing/text/JTextComponent.getActions:()[Ljavax/swing/Action;
+    aload_0
+    getfield Notepad.defaultActions:[Ljavax/swing/Action;
+    invokestatic javax/swing/text/TextAction.augmentList:([Ljavax/swing/Action;[Ljavax/swing/Action;)[Ljavax/swing/Action;
+    areturn
+.endmethod
+
+.method protected createEditor:()Ljavax/swing/text/JTextComponent;
+.maxstack 6
+.maxlocals 2
+    new javax/swing/JTextArea
+    dup
+    invokespecial javax/swing/JTextArea.<init>:()V
+    astore_1
+    aload_1
+    iconst_1
+    invokevirtual javax/swing/text/JTextComponent.setDragEnabled:(Z)V
+    aload_1
+    new java/awt/Font
+    dup
+    ldc "monospaced"
+    iconst_0
+    bipush 12
+    invokespecial java/awt/Font.<init>:(Ljava/lang/String;II)V
+    invokevirtual javax/swing/text/JTextComponent.setFont:(Ljava/awt/Font;)V
+    aload_1
+    areturn
+.endmethod
+
+.method protected getEditor:()Ljavax/swing/text/JTextComponent;
+.maxstack 1
+.maxlocals 1
+    aload_0
+    getfield Notepad.editor:Ljavax/swing/text/JTextComponent;
+    areturn
+.endmethod
+
+.method protected getFrame:()Ljava/awt/Frame;
+.maxstack 1
+.maxlocals 2
+    aload_0
+    invokevirtual Notepad.getParent:()Ljava/awt/Container;
+    astore_1
+L5:
+    aload_1
+    ifnull L29
+    aload_1
+    instanceof java/awt/Frame
+    ifeq L21
+    aload_1
+    checkcast java/awt/Frame
+    areturn
+L21:
+    aload_1
+    invokevirtual java/awt/Container.getParent:()Ljava/awt/Container;
+    astore_1
+    goto L5
+L29:
+    aconst_null
+    areturn
+.endmethod
+
+.method protected createMenuItem:(Ljava/lang/String;)Ljavax/swing/JMenuItem;
+.maxstack 4
+.maxlocals 6
+    new javax/swing/JMenuItem
+    dup
+    aload_0
+    aload_1
+    invokedynamic
+    invokevirtual Notepad.getResourceString:(Ljava/lang/String;)Ljava/lang/String;
+    invokespecial javax/swing/JMenuItem.<init>:(Ljava/lang/String;)V
+    astore_2
+    aload_0
+    aload_1
+    invokedynamic
+    invokevirtual Notepad.getResource:(Ljava/lang/String;)Ljava/net/URL;
+    astore_3
+    aload_3
+    ifnull L50
+    aload_2
+    iconst_4
+    invokevirtual javax/swing/JMenuItem.setHorizontalTextPosition:(I)V
+    aload_2
+    new javax/swing/ImageIcon
+    dup
+    aload_3
+    invokespecial javax/swing/ImageIcon.<init>:(Ljava/net/URL;)V
+    invokevirtual javax/swing/JMenuItem.setIcon:(Ljavax/swing/Icon;)V
+L50:
+    aload_0
+    aload_1
+    invokedynamic
+    invokevirtual Notepad.getProperty:(Ljava/lang/String;)Ljava/lang/String;
+    astore 4
+    aload 4
+    ifnonnull L70
+    aload_1
+    astore 4
+L70:
+    aload_2
+    aload 4
+    invokevirtual javax/swing/JMenuItem.setActionCommand:(Ljava/lang/String;)V
+    aload_0
+    aload 4
+    invokevirtual Notepad.getAction:(Ljava/lang/String;)Ljavax/swing/Action;
+    astore 5
+    aload 5
+    ifnull L121
+    aload_2
+    aload 5
+    invokevirtual javax/swing/JMenuItem.addActionListener:(Ljava/awt/event/ActionListener;)V
+    aload 5
+    aload_0
+    aload_2
+    invokevirtual Notepad.createActionChangeListener:(Ljavax/swing/JMenuItem;)Ljava/beans/PropertyChangeListener;
+    invokeinterface javax/swing/Action.addPropertyChangeListener:(Ljava/beans/PropertyChangeListener;)V 2
+    aload 5
+    invokeinterface javax/swing/Action.isEnabled:()Z 1
+    aconst_null
+    fstore 167
+    nop
+    iconst_5
+L121:
+    aload_2
+    iconst_0
+    invokevirtual javax/swing/JMenuItem.setEnabled:(Z)V
+    aload_2
+    areturn
+.endmethod
+
+.method protected getAction:(Ljava/lang/String;)Ljavax/swing/Action;
+.maxstack 2
+.maxlocals 2
+    aload_0
+    getfield Notepad.commands:Ljava/util/Map;
+    aload_1
+    invokeinterface java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object; 2
+    nop
+    lstore 176
+.endmethod
+
+.method protected getProperty:(Ljava/lang/String;)Ljava/lang/String;
+.maxstack 2
+.maxlocals 2
+    getstatic Notepad.properties:Ljava/util/Properties;
+    aload_1
+    invokevirtual java/util/Properties.getProperty:(Ljava/lang/String;)Ljava/lang/String;
+    areturn
+.endmethod
+
+.method protected getResourceString:(Ljava/lang/String;)Ljava/lang/String;
+.maxstack 2
+.maxlocals 4
+.try
+    getstatic Notepad.resources:Ljava/util/ResourceBundle;
+    aload_1
+    invokevirtual java/util/ResourceBundle.getString:(Ljava/lang/String;)Ljava/lang/String;
+    astore_2
+.catch java/util/MissingResourceException L11
+    goto L14
+L11:
+    astore_3
+    aconst_null
+    astore_2
+L14:
+    aload_2
+    areturn
+.endmethod
+
+.method protected getResource:(Ljava/lang/String;)Ljava/net/URL;
+.maxstack 2
+.maxlocals 3
+    aload_0
+    aload_1
+    invokevirtual Notepad.getResourceString:(Ljava/lang/String;)Ljava/lang/String;
+    astore_2
+    aload_2
+    ifnull L19
+    aload_0
+    invokevirtual java/lang/Object.getClass:()Ljava/lang/Class;
+    aload_2
+    invokevirtual java/lang/Class.getResource:(Ljava/lang/String;)Ljava/net/URL;
+    areturn
+L19:
+    aconst_null
+    areturn
+.endmethod
+
+.method protected createStatusbar:()Ljava/awt/Component;
+.maxstack 4
+.maxlocals 1
+    aload_0
+    new Notepad$StatusBar
+    dup
+    aload_0
+    invokespecial Notepad$StatusBar.<init>:(LNotepad;)V
+    putfield Notepad.status:Ljavax/swing/JComponent;
+    aload_0
+    getfield Notepad.status:Ljavax/swing/JComponent;
+    areturn
+.endmethod
+
+.method protected resetUndoManager:()V
+.maxstack 1
+.maxlocals 1
+    aload_0
+    getfield Notepad.undo:Ljavax/swing/undo/UndoManager;
+    invokevirtual javax/swing/undo/UndoManager.discardAllEdits:()V
+    aload_0
+    getfield Notepad.undoAction:LNotepad$UndoAction;
+    invokevirtual Notepad$UndoAction.update:()V
+    aload_0
+    getfield Notepad.redoAction:LNotepad$RedoAction;
+    invokevirtual Notepad$RedoAction.update:()V
+    return
+.endmethod
+
+.method private createToolbar:()Ljava/awt/Component;
+.maxstack 3
+.maxlocals 5
+    aload_0
+    new javax/swing/JToolBar
+    dup
+    invokespecial javax/swing/JToolBar.<init>:()V
+    putfield Notepad.toolbar:Ljavax/swing/JToolBar;
+    aload_0
+    invokevirtual Notepad.getToolBarKeys:()[Ljava/lang/String;
+    astore_1
+    aload_1
+    arraylength
+    istore_2
+    iconst_0
+    istore_3
+L21:
+    iload_3
+    iload_2
+    if_icmpge L77
+    aload_1
+    iload_3
+    aaload
+    astore 4
+    aload 4
+    ldc_w "-"
+    invokevirtual java/lang/String.equals:(Ljava/lang/Object;)Z
+    ifeq L57
+    aload_0
+    getfield Notepad.toolbar:Ljavax/swing/JToolBar;
+    iconst_5
+    invokestatic javax/swing/Box.createHorizontalStrut:(I)Ljava/awt/Component;
+    invokevirtual javax/swing/JToolBar.add:(Ljava/awt/Component;)Ljava/awt/Component;
+    pop
+    goto L71
+L57:
+    aload_0
+    getfield Notepad.toolbar:Ljavax/swing/JToolBar;
+    aload_0
+    aload 4
+    invokevirtual Notepad.createTool:(Ljava/lang/String;)Ljava/awt/Component;
+    invokevirtual javax/swing/JToolBar.add:(Ljava/awt/Component;)Ljava/awt/Component;
+    pop
+L71:
+    iinc 3 1
+    goto L21
+L77:
+    aload_0
+    getfield Notepad.toolbar:Ljavax/swing/JToolBar;
+    invokestatic javax/swing/Box.createHorizontalGlue:()Ljava/awt/Component;
+    invokevirtual javax/swing/JToolBar.add:(Ljava/awt/Component;)Ljava/awt/Component;
+    pop
+    aload_0
+    getfield Notepad.toolbar:Ljavax/swing/JToolBar;
+    areturn
+.endmethod
+
+.method protected createTool:(Ljava/lang/String;)Ljava/awt/Component;
+.maxstack 2
+.maxlocals 2
+    aload_0
+    aload_1
+    invokevirtual Notepad.createToolbarButton:(Ljava/lang/String;)Ljavax/swing/JButton;
+    areturn
+.endmethod
+
+.method protected createToolbarButton:(Ljava/lang/String;)Ljavax/swing/JButton;
+.maxstack 7
+.maxlocals 7
+    aload_0
+    aload_1
+    invokedynamic
+    invokevirtual Notepad.getResource:(Ljava/lang/String;)Ljava/net/URL;
+    astore_2
+    new Notepad$2
+    dup
+    aload_0
+    new javax/swing/ImageIcon
+    dup
+    aload_2
+    invokespecial javax/swing/ImageIcon.<init>:(Ljava/net/URL;)V
+    invokespecial Notepad$2.<init>:(LNotepad;Ljavax/swing/Icon;)V
+    astore_3
+    aload_3
+    iconst_0
+    invokevirtual javax/swing/JButton.setRequestFocusEnabled:(Z)V
+    aload_3
+    new java/awt/Insets
+    dup
+    iconst_1
+    iconst_1
+    iconst_1
+    iconst_1
+    invokespecial java/awt/Insets.<init>:(IIII)V
+    invokevirtual javax/swing/JButton.setMargin:(Ljava/awt/Insets;)V
+    aload_0
+    aload_1
+    invokedynamic
+    invokevirtual Notepad.getProperty:(Ljava/lang/String;)Ljava/lang/String;
+    astore 4
+    aload 4
+    ifnonnull L68
+    aload_1
+    astore 4
+L68:
+    aload_0
+    aload 4
+    invokevirtual Notepad.getAction:(Ljava/lang/String;)Ljavax/swing/Action;
+    astore 5
+    aload 5
+    ifnull L96
+    aload_3
+    aload 4
+    invokevirtual javax/swing/JButton.setActionCommand:(Ljava/lang/String;)V
+    aload_3
+    aload 5
+    invokevirtual javax/swing/JButton.addActionListener:(Ljava/awt/event/ActionListener;)V
+    goto L101
+L96:
+    aload_3
+    iconst_0
+    invokevirtual javax/swing/JButton.setEnabled:(Z)V
+L101:
+    aload_0
+    aload_1
+    invokedynamic
+    invokevirtual Notepad.getResourceString:(Ljava/lang/String;)Ljava/lang/String;
+    astore 6
+    aload 6
+    ifnull L124
+    aload_3
+    aload 6
+    invokevirtual javax/swing/JButton.setToolTipText:(Ljava/lang/String;)V
+L124:
+    aload_3
+    areturn
+.endmethod
+
+.method protected createMenubar:()Ljavax/swing/JMenuBar;
+.maxstack 2
+.maxlocals 7
+    new javax/swing/JMenuBar
+    dup
+    invokespecial javax/swing/JMenuBar.<init>:()V
+    astore_1
+    aload_0
+    invokevirtual Notepad.getMenuBarKeys:()[Ljava/lang/String;
+    astore_2
+    aload_2
+    arraylength
+    istore_3
+    iconst_0
+    istore 4
+L19:
+    iload 4
+    iload_3
+    if_icmpge L57
+    aload_2
+    iload 4
+    aaload
+    astore 5
+    aload_0
+    aload 5
+    invokevirtual Notepad.createMenu:(Ljava/lang/String;)Ljavax/swing/JMenu;
+    astore 6
+    aload 6
+    ifnull L51
+    aload_1
+    aload 6
+    invokevirtual javax/swing/JMenuBar.add:(Ljavax/swing/JMenu;)Ljavax/swing/JMenu;
+    pop
+L51:
+    iinc 4 1
+    goto L19
+L57:
+    aload_1
+    areturn
+.endmethod
+
+.method protected createMenu:(Ljava/lang/String;)Ljavax/swing/JMenu;
+.maxstack 4
+.maxlocals 8
+    new javax/swing/JMenu
+    dup
+    aload_0
+    aload_1
+    invokedynamic
+    invokevirtual Notepad.getResourceString:(Ljava/lang/String;)Ljava/lang/String;
+    invokespecial javax/swing/JMenu.<init>:(Ljava/lang/String;)V
+    astore_2
+    aload_0
+    aload_1
+    invokevirtual Notepad.getItemKeys:(Ljava/lang/String;)[Ljava/lang/String;
+    astore_3
+    aload_3
+    arraylength
+    istore 4
+    iconst_0
+    istore 5
+L31:
+    iload 5
+    iload 4
+    if_icmpge L83
+    aload_3
+    iload 5
+    aaload
+    astore 6
+    aload 6
+    ldc_w "-"
+    invokevirtual java/lang/String.equals:(Ljava/lang/Object;)Z
+    ifeq L62
+    aload_2
+    invokevirtual javax/swing/JMenu.addSeparator:()V
+    goto L77
+L62:
+    aload_0
+    aload 6
+    invokevirtual Notepad.createMenuItem:(Ljava/lang/String;)Ljavax/swing/JMenuItem;
+    astore 7
+    aload_2
+    aload 7
+    invokevirtual javax/swing/JMenu.add:(Ljavax/swing/JMenuItem;)Ljavax/swing/JMenuItem;
+    pop
+L77:
+    iinc 5 1
+    goto L31
+L83:
+    aload_2
+    areturn
+.endmethod
+
+.method protected getItemKeys:(Ljava/lang/String;)[Ljava/lang/String;
+.maxstack 2
+.maxlocals 4
+    aload_1
+    astore_2
+    iconst_m1
+    istore_3
+    aload_2
+    invokevirtual java/lang/String.hashCode:()I
+    lookupswitch L86 3 {
+        3108362: L51
+        3143036: L36
+        95458899: L66
+    }
+L44:
+    aload_2
+    ldc_w "file"
+    invokevirtual java/lang/String.equals:(Ljava/lang/Object;)Z
+    ifeq L86
+    iconst_0
+    istore_3
+    goto L86
+L59:
+    aload_2
+    ldc_w "edit"
+    invokevirtual java/lang/String.equals:(Ljava/lang/Object;)Z
+    ifeq L86
+    iconst_1
+    istore_3
+    goto L86
+L74:
+    aload_2
+    ldc_w "debug"
+    invokevirtual java/lang/String.equals:(Ljava/lang/Object;)Z
+    ifeq L86
+    iconst_2
+    istore_3
+L86:
+    iload_3
+    tableswitch L124 0 2 {L25 L29 L33}
+L112:
+    getstatic Notepad.FILE_KEYS:[Ljava/lang/String;
+    areturn
+L116:
+    getstatic Notepad.EDIT_KEYS:[Ljava/lang/String;
+    areturn
+L120:
+    getstatic Notepad.DEBUG_KEYS:[Ljava/lang/String;
+    areturn
+L124:
+    aconst_null
+    areturn
+.endmethod
+
+.method protected getMenuBarKeys:()[Ljava/lang/String;
+.maxstack 1
+.maxlocals 1
+    getstatic Notepad.MENUBAR_KEYS:[Ljava/lang/String;
+    areturn
+.endmethod
+
+.method protected getToolBarKeys:()[Ljava/lang/String;
+.maxstack 1
+.maxlocals 1
+    getstatic Notepad.TOOLBAR_KEYS:[Ljava/lang/String;
+    areturn
+.endmethod
+
+.method protected createActionChangeListener:(Ljavax/swing/JMenuItem;)Ljava/beans/PropertyChangeListener;
+.maxstack 4
+.maxlocals 2
+    new Notepad$ActionChangedListener
+    dup
+    aload_0
+    aload_1
+    invokespecial Notepad$ActionChangedListener.<init>:(LNotepad;Ljavax/swing/JMenuItem;)V
+    areturn
+.endmethod
+
+.method static <clinit>:()V
+.maxstack 4
+.maxlocals 1
+    iconst_3
+    anewarray java/lang/String
+    dup
+    iconst_0
+    ldc_w "file"
+    aastore
+    dup
+    iconst_1
+    ldc_w "edit"
+    aastore
+    dup
+    iconst_2
+    ldc_w "debug"
+    aastore
+    putstatic Notepad.MENUBAR_KEYS:[Ljava/lang/String;
+    bipush 7
+    anewarray java/lang/String
+    dup
+    iconst_0
+    ldc_w "new"
+    aastore
+    dup
+    iconst_1
+    ldc_w "open"
+    aastore
+    dup
+    iconst_2
+    ldc_w "save"
+    aastore
+    dup
+    iconst_3
+    ldc_w "-"
+    aastore
+    dup
+    iconst_4
+    ldc_w "cut"
+    aastore
+    dup
+    iconst_5
+    ldc_w "copy"
+    aastore
+    dup
+    bipush 6
+    ldc_w "paste"
+    aastore
+    putstatic Notepad.TOOLBAR_KEYS:[Ljava/lang/String;
+    iconst_5
+    anewarray java/lang/String
+    dup
+    iconst_0
+    ldc_w "new"
+    aastore
+    dup
+    iconst_1
+    ldc_w "open"
+    aastore
+    dup
+    iconst_2
+    ldc_w "save"
+    aastore
+    dup
+    iconst_3
+    ldc_w "-"
+    aastore
+    dup
+    iconst_4
+    ldc_w "exit"
+    aastore
+    putstatic Notepad.FILE_KEYS:[Ljava/lang/String;
+    bipush 6
+    anewarray java/lang/String
+    dup
+    iconst_0
+    ldc_w "cut"
+    aastore
+    dup
+    iconst_1
+    ldc_w "copy"
+    aastore
+    dup
+    iconst_2
+    ldc_w "paste"
+    aastore
+    dup
+    iconst_3
+    ldc_w "-"
+    aastore
+    dup
+    iconst_4
+    ldc_w "undo"
+    aastore
+    dup
+    iconst_5
+    ldc_w "redo"
+    aastore
+    putstatic Notepad.EDIT_KEYS:[Ljava/lang/String;
+    iconst_2
+    anewarray java/lang/String
+    dup
+    iconst_0
+    ldc_w "dump"
+    aastore
+    dup
+    iconst_1
+    ldc_w "showElementTree"
+    aastore
+    putstatic Notepad.DEBUG_KEYS:[Ljava/lang/String;
+.try
+    new java/util/Properties
+    dup
+    invokespecial java/util/Properties.<init>:()V
+    putstatic Notepad.properties:Ljava/util/Properties;
+    getstatic Notepad.properties:Ljava/util/Properties;
+    ldc Notepad
+    ldc_w "resources/NotepadSystem.properties"
+    invokevirtual java/lang/Class.getResourceAsStream:(Ljava/lang/String;)Ljava/io/InputStream;
+    invokevirtual java/util/Properties.load:(Ljava/io/InputStream;)V
+    ldc_w "resources.Notepad"
+    invokestatic java/util/Locale.getDefault:()Ljava/util/Locale;
+    invokestatic java/util/ResourceBundle.getBundle:(Ljava/lang/String;Ljava/util/Locale;)Ljava/util/ResourceBundle;
+    putstatic Notepad.resources:Ljava/util/ResourceBundle;
+.catch java/util/MissingResourceException L215
+.catch java/io/IOException L215
+    goto L229
+L215:
+    astore_0
+    getstatic java/lang/System.err:Ljava/io/PrintStream;
+    ldc_w "resources/Notepad.properties or resources/NotepadSystem.properties not found"
+    invokevirtual java/io/PrintStream.println:(Ljava/lang/String;)V
+    iconst_1
+    invokestatic java/lang/System.exit:(I)V
+L229:
+    return
+.endmethod
+
+.endclass
